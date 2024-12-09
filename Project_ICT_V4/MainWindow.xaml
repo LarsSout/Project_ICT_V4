@@ -83,7 +83,9 @@
         <!-- Exit button -->
         <Button Grid.Column="1" Content="Beeindig programma" HorizontalAlignment="Left" Margin="229,17,0,0" Grid.Row="4" VerticalAlignment="Top" ToolTip="Beindigen van het programma" Height="39" Width="116" Click="Button_Click"/>
         <Label Grid.Column="1" Content="(CTRL R)" HorizontalAlignment="Left" Margin="14,149,0,0" Grid.Row="4" VerticalAlignment="Top"/>
-        <CheckBox Grid.Column="1" Content="Buzzer uit (default: aan)" HorizontalAlignment="Left" Margin="220,4,0,0" Grid.Row="3" VerticalAlignment="Top"/>
+        <CheckBox Name="BuzzerCheckbox" Grid.Column="1" Content="Buzzer uit (default: aan)" HorizontalAlignment="Left" Margin="220,4,0,0" Grid.Row="3" VerticalAlignment="Top" 
+          Checked="BuzzerCheckbox_Checked" 
+          Unchecked="BuzzerCheckbox_Unchecked" />
 
     </Grid>
 </Window>

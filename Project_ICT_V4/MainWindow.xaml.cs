@@ -24,13 +24,36 @@ namespace Project_ICT_V3
         private bool isProcessing = false;            // Geeft aan of een actie bezig is
         private bool COMtest = false;                 // Controleer of de COM-poort beschikbaar is
         private bool MagDoorDoen = true;              // Controleer of de conversie doorgaat
+        public bool BuzzerChecked;
+
+      
 
         public MainWindow()
         {
             InitializeComponent();
             this.Closed += WindowClosedReset; // Event gekoppeld om de poort te resetten bij sluiting van het venster
             this.KeyDown += Window_KeyDown;  // Event gekoppeld voor toetsafhandeling
-                                             // zoals Escape
+
+            
+
+
+            if (BuzzerChecked)
+            {
+                if (_port.IsOpen)
+                {
+                    _port.WriteLine("BUZZER_UIT"); // Stuur commando naar Arduino
+                }
+            }
+            else {
+
+                if (_port.IsOpen)
+                {
+                    _port.WriteLine("BUZZER_AAN"); // Stuur commando naar Arduino
+
+                }
+            }
+            
+
 
             // Detecteren van een beschikbare COM-poort
             for (int i = 1; i < 100; i++)
@@ -179,6 +202,11 @@ namespace Project_ICT_V3
         /// </summary>
         private async Task SimuleerRekenOmButtonClick()
         {
+            if (BuzzerChecked)
+            {
+                _port.WriteLine("BUZZER_UIT");
+            }
+
             if (isProcessing)
             {
                 MessageBox.Show("Het proces is al bezig. Wacht tot het is voltooid.");
@@ -201,7 +229,10 @@ namespace Project_ICT_V3
         {
             if (e.Key == Key.Enter)
             {
+                BuzzerCheckbox.Visibility = Visibility.Hidden;
                 await SimuleerRekenOmButtonClick();
+                await Task.Delay(250);
+                BuzzerCheckbox.Visibility = Visibility.Visible;
             }
         }
 
@@ -253,7 +284,11 @@ namespace Project_ICT_V3
         /// </summary>
         private async void ConverterButton_Click(object sender, RoutedEventArgs e)
         {
+            BuzzerCheckbox.Visibility = Visibility.Hidden;
             await SimuleerRekenOmButtonClick();
+            await Task.Delay(250);
+            BuzzerCheckbox.Visibility=Visibility.Visible;
+            
         }
 
         /// <summary>
@@ -279,14 +314,29 @@ namespace Project_ICT_V3
             }
         }
 
-        /// <summary>
-        /// Automatich naar tekstbox.
-        /// </summary>
+
   
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            InitializeComponent();
             invoerBox.Focus(); // Geef de focus aan de invoerbox
             
         }
+                                
+        private void BuzzerCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            InitializeComponent();
+            BuzzerChecked = true; // Update lokale status
+          
+        }
+
+        private void BuzzerCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            InitializeComponent();
+            BuzzerChecked = false; // Update lokale status
+            
+        }
+
+
     }
 }
