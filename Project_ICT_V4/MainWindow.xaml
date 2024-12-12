@@ -7,8 +7,8 @@
         ResizeMode="NoResize"
         Title="Morse Converter" Height="481" Width="694" WindowStartupLocation="CenterScreen"
         Background="#f0f0f0"
-        Name="WPF"
-        Loaded="Window_Loaded">
+        Name="WPF" Loaded="Window_Loaded"
+        >
 
     <Grid Name="GRIDofAction" Margin="20">
         <!-- Row definitions -->
@@ -85,7 +85,9 @@
         <Label Grid.Column="1" Content="(CTRL R)" HorizontalAlignment="Left" Margin="14,149,0,0" Grid.Row="4" VerticalAlignment="Top"/>
         <CheckBox Name="BuzzerCheckbox" Grid.Column="1" Content="Buzzer uit (default: aan)" HorizontalAlignment="Left" Margin="220,4,0,0" Grid.Row="3" VerticalAlignment="Top" 
           Checked="BuzzerCheckbox_Checked" 
-          Unchecked="BuzzerCheckbox_Unchecked" />
+          Unchecked="BuzzerCheckbox_Unchecked"  />
+        <Button Content="Morscodes" HorizontalAlignment="Left" Margin="54,36,0,0" Grid.Row="4" VerticalAlignment="Top" Click="Button_Click_1"/>
+
 
     </Grid>
 </Window>

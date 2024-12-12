@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Project_ICT_V4;
+using System;
 using System.Diagnostics.Tracing;
 using System.IO.Ports;
 using System.Threading.Tasks;
@@ -9,7 +10,9 @@ using System.Windows.Media;
 namespace Project_ICT_V3
 {
     public partial class MainWindow : Window
-    {
+    {  
+        
+
         private SerialPort _port = new SerialPort();  // De seriële poort voor communicatie met externe apparaten
 
         // Declaratie van strings
@@ -33,8 +36,9 @@ namespace Project_ICT_V3
             InitializeComponent();
             this.Closed += WindowClosedReset; // Event gekoppeld om de poort te resetten bij sluiting van het venster
             this.KeyDown += Window_KeyDown;  // Event gekoppeld voor toetsafhandeling
+     
 
-            
+
 
 
             if (BuzzerChecked)
@@ -252,6 +256,7 @@ namespace Project_ICT_V3
             {
                 resetButtonClick = 0;
             }
+            
         }
 
   
@@ -320,6 +325,7 @@ namespace Project_ICT_V3
         {
             InitializeComponent();
             invoerBox.Focus(); // Geef de focus aan de invoerbox
+            _port.WriteLine("LICHTEN_OPSTARTEN");
             
         }
                                 
@@ -337,6 +343,11 @@ namespace Project_ICT_V3
             
         }
 
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            Alfabeth _morsCodes = new Alfabeth();
 
+            _morsCodes.Show();
+        }
     }
 }
