@@ -8,7 +8,12 @@
        ResizeMode="NoResize" Height="481" Width="694" WindowStartupLocation="CenterScreen"
     >
     <Grid>
-        <ComboBox Name="talenAlfabet" Margin="280,34,280,384" SelectionChanged="ComboBox_SelectionChanged"/>
+        <ComboBox Name="talenAlfabet" Margin="280,34,280,384" SelectionChanged="ComboBox_SelectionChanged">
+            
+
+
+
+        </ComboBox>
         <Label Name="morscodes" Content="" HorizontalAlignment="Left" Margin="45,125,0,0" VerticalAlignment="Top" Height="303" Width="580" FontSize="15" />
         <Label Content="Kies uw taal om de morscodes te zien" HorizontalAlignment="Left" Margin="69,45,0,0" VerticalAlignment="Top" Width="206" Height="36"/>
 

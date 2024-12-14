@@ -125,8 +125,6 @@ namespace Project_ICT_V3
 
             if (string.IsNullOrWhiteSpace(input))
             {
-                MessageBox.Show("Te veel gegevens.");
-
                 return "Lege invoer of geen tekst opgegeven.";
             }
 

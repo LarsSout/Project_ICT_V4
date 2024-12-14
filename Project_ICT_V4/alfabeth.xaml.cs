@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Project_ICT_V3;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,8 @@ namespace Project_ICT_V4
     /// </summary>
     public partial class Alfabeth : Window
     {
+        
+
         string morseCodeEnglish =
                 "A: .-    B: -...    C: -.-.    D: -..    E: .    F: ..-.   G: --.    H: ....    " +
                 "I: ..    J: .---    K: -.-     L: .-..   M: -- \r\n N: -.     O: ---    P: .--.   " +
@@ -81,49 +84,49 @@ namespace Project_ICT_V4
         {
             InitializeComponent();
 
-            talenAlfabet.Items.Add("Engels");
-            talenAlfabet.Items.Add("Frans");
-            talenAlfabet.Items.Add("Spaans");
-            talenAlfabet.Items.Add("Duits");
-            talenAlfabet.Items.Add("Turks");
-            talenAlfabet.Items.Add("Russisch");
-            talenAlfabet.Items.Add("Italiaans");
-            talenAlfabet.Items.Add("Chinees");
+            talenAlfabet.Items.Add("English");
+            talenAlfabet.Items.Add("Francais");
+            talenAlfabet.Items.Add("Español");
+            talenAlfabet.Items.Add("Deutsch");
+            talenAlfabet.Items.Add("Türkçe");
+            talenAlfabet.Items.Add("Русский");
+            talenAlfabet.Items.Add("Italiano");
+            talenAlfabet.Items.Add("中國人");
         }
 
         public void GiveMors()
         {
             switch (talenAlfabet.SelectedItem)
             {
-                case "Engels":
+                case "English":
                     morscodes.Content = morseCodeEnglish;
                     break;
 
-                case "Frans":
+                case "Francais":
                     morscodes.Content = morseCodeFrench;
                     break;
 
-                case "Russisch":
+                case "Русский":
                     morscodes.Content = morseCodeRussian;
                     break;
 
-                case "Spaans":
+                case "Español":
                     morscodes.Content = morseCodeSpanish;
                     break;
 
-                case "Duits":
+                case "Deutsch":
                     morscodes.Content = morseCodeGerman;
                     break;
 
-                case "Italiaans":
+                case "Italiano":
                     morscodes.Content = morseCodeItalian;
                     break;
 
-                case "Turks":
+                case "Türkçe":
                     morscodes.Content = morseCodeTurkish;
                     break;
 
-                case "Chinees":
+                case "中國人":
                     morscodes.Content = morseCodeChinese;
                     break;
             }

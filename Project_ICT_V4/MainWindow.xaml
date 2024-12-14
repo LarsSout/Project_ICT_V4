@@ -1,4 +1,4 @@
-﻿<Window x:Class="Project_ICT_V3.MainWindow"
+﻿<Window x:Class="Project_ICT_V3.MainWindow" 
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -51,7 +51,7 @@
                VerticalAlignment="Center" Margin="44,0,64,0" FontSize="14"/>
 
         <!-- Output result -->
-        <TextBlock Name="antwoord" Grid.Row="3" 
+        <TextBlock Name="antwoordTXT" Grid.Row="3" 
                    Text="" VerticalAlignment="Top" 
                    Margin="145,5,0,0" FontSize="14" Foreground="#333333" Grid.ColumnSpan="2" Height="29" Grid.RowSpan="2"/>
 
@@ -87,6 +87,10 @@
           Checked="BuzzerCheckbox_Checked" 
           Unchecked="BuzzerCheckbox_Unchecked"  />
         <Button Content="Morscodes" HorizontalAlignment="Left" Margin="54,36,0,0" Grid.Row="4" VerticalAlignment="Top" Click="Button_Click_1"/>
+        <ProgressBar Name="ProgressBar" HorizontalAlignment="Left" Height="15" Margin="194,10,0,0" Grid.Row="4" VerticalAlignment="Top" Width="264" Grid.ColumnSpan="2" ValueChanged="ProgressBar_ValueChanged"/>
+        <Label Name="Value" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="32,28,0,0" Grid.Row="4" VerticalAlignment="Top" Width="36"/>
+        <Label Name="maxValue" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="196,4,0,0" Grid.Row="4" VerticalAlignment="Top"/>
+        <Label Name="percentage" Grid.Column="1" Content="0%" HorizontalAlignment="Left" Margin="31,4,0,0" Grid.Row="4" VerticalAlignment="Top"/>
 
 
     </Grid>

@@ -1,6 +1,7 @@
 ﻿using Project_ICT_V4;
 using System;
 using System.Diagnostics.Tracing;
+using System.DirectoryServices;
 using System.IO.Ports;
 using System.Threading.Tasks;
 using System.Windows;
@@ -10,8 +11,8 @@ using System.Windows.Media;
 namespace Project_ICT_V3
 {
     public partial class MainWindow : Window
-    {  
-        
+    {
+
 
         private SerialPort _port = new SerialPort();  // De seriële poort voor communicatie met externe apparaten
 
@@ -22,6 +23,7 @@ namespace Project_ICT_V3
         // Declaratie van integers
         private int klik = 0;                         // Klikstatus voor verwerking
         public int resetButtonClick = 0;             // Houdt bij hoeveel keer de resetknop is gebruikt
+        public int aantalinvoer;
 
         // Declaratie van booleans
         private bool isProcessing = false;            // Geeft aan of een actie bezig is
@@ -29,14 +31,13 @@ namespace Project_ICT_V3
         private bool MagDoorDoen = true;              // Controleer of de conversie doorgaat
         public bool BuzzerChecked;
 
-      
+
 
         public MainWindow()
         {
             InitializeComponent();
             this.Closed += WindowClosedReset; // Event gekoppeld om de poort te resetten bij sluiting van het venster
             this.KeyDown += Window_KeyDown;  // Event gekoppeld voor toetsafhandeling
-     
 
 
 
@@ -48,7 +49,8 @@ namespace Project_ICT_V3
                     _port.WriteLine("BUZZER_UIT"); // Stuur commando naar Arduino
                 }
             }
-            else {
+            else
+            {
 
                 if (_port.IsOpen)
                 {
@@ -56,7 +58,7 @@ namespace Project_ICT_V3
 
                 }
             }
-            
+
 
 
             // Detecteren van een beschikbare COM-poort
@@ -133,22 +135,30 @@ namespace Project_ICT_V3
 
                     MorsConverter converter = new MorsConverter(); // Initialiseer de converter
                     input = invoerBox.Text; // Verkrijg de invoer van de gebruiker
+                    antwoordTXT.Text = output;
+
 
                     if (!string.IsNullOrEmpty(input))
                     {
                         output = converter.CheckOutput(input); // Converteer naar morse
-                        antwoord.Text = output;               // Toon output in de interface
+                        antwoordTXT.Text = output;               // Toon output in de interface
                     }
                     else
                     {
-                        antwoord.Text = "Voer tekst in om te converteren."; // Geen invoer ontvangen
+                        antwoordTXT.Text = "Voer tekst in om te converteren."; // Geen invoer ontvangen
                         return;
                     }
 
                     foreach (char character in output)
                     {
+                        antwoordTXT.Text = output;
+                        int maxLength = output.Count(c => c == '.' || c == '-' || c == '|');
+                        ProgressBar.Maximum = maxLength;
+                        maxValue.Content = maxLength;
+
                         if (character == '.' && MagDoorDoen)
                         {
+                            aantalinvoer++;
                             _port.WriteLine(".");
                             DOTcirkel.Fill = Brushes.Blue; // Blauw voor punt
                             await Task.Delay(200);
@@ -157,6 +167,7 @@ namespace Project_ICT_V3
                         }
                         else if (character == '-' && MagDoorDoen)
                         {
+                            aantalinvoer++;
                             _port.WriteLine("-");
                             DOTcirkel.Fill = Brushes.Green; // Groen voor streep
                             await Task.Delay(600);
@@ -165,6 +176,7 @@ namespace Project_ICT_V3
                         }
                         else if (character == '|' && MagDoorDoen)
                         {
+                            aantalinvoer++;
                             _port.WriteLine("|");
                             Linecirkel.Fill = Brushes.Red; // Rood voor scheiding
                             await Task.Delay(700);
@@ -173,8 +185,11 @@ namespace Project_ICT_V3
                         }
                         else if (character == '?' && MagDoorDoen)
                         {
+                            aantalinvoer++;
                             MessageBox.Show("Geen geldig getal/letter."); // Ongeldige karakters
                         }
+                        ProgressBar.Value = aantalinvoer;
+
                     }
 
                     MagDoorDoen = false;
@@ -190,11 +205,12 @@ namespace Project_ICT_V3
                 MessageBox.Show("Geen COM poort aangesloten, het programma wordt beëindigd in 5 seconden");
                 System.Environment.Exit(1);
             }
+
         }
 
         public void ResetOut_Input(string content, bool magOFniet, string txt, bool stuurLichtenUit = false)
         {
-            antwoord.Text = content;
+            antwoordTXT.Text = content;
             MagDoorDoen = magOFniet;
             invoerBox.Text = txt;
             input = "";
@@ -216,19 +232,24 @@ namespace Project_ICT_V3
                 MessageBox.Show("Het proces is al bezig. Wacht tot het is voltooid.");
                 return;
             }
-            
+
             isProcessing = true;
             await Morsconverteren(); // Start de conversie
             _port.WriteLine("#");
             Linecirkel.Fill = Brushes.Red; // Rood voor scheiding
             await Task.Delay(1400);
             Linecirkel.Fill = Brushes.White;
+            BuzzerCheckbox.Visibility = Visibility.Visible;
             isProcessing = false;
             ResetOut_Input("", false, string.Empty, stuurLichtenUit: false);
+            ProgressBar.Value = 0;
+            ProgressBar.Maximum = 100;
+            aantalinvoer = 0;
+            percentage.Content = 0+"%";
 
         }
 
-       
+
         private async void EnterKeyPress(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -236,32 +257,23 @@ namespace Project_ICT_V3
                 BuzzerCheckbox.Visibility = Visibility.Hidden;
                 await SimuleerRekenOmButtonClick();
                 await Task.Delay(250);
-                BuzzerCheckbox.Visibility = Visibility.Visible;
+
             }
         }
 
-       
-        private void resetButton_click(object sender, RoutedEventArgs e)
+
+        private async void resetButton_click(object sender, RoutedEventArgs e)
         {
-            resetButtonClick++;
+            SimuleerResetButtonClick();
+            await Task.Delay(1400);
 
-            if (_port.IsOpen)
-            {
-                _port.WriteLine("RESET");
-            }
-
-            ResetOut_Input("", false, string.Empty, stuurLichtenUit: true);
-
-            if (!isProcessing)
-            {
-                resetButtonClick = 0;
-            }
-            
         }
 
-  
+
         private void SimuleerResetButtonClick()
         {
+            BuzzerCheckbox.Visibility = Visibility.Visible;
+
             resetButtonClick++;
 
             if (_port.IsOpen)
@@ -275,9 +287,10 @@ namespace Project_ICT_V3
             {
                 resetButtonClick = 0;
             }
+
         }
 
-    
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             WindowClosedReset(this, EventArgs.Empty); // Reset poort bij afsluiten
@@ -292,8 +305,7 @@ namespace Project_ICT_V3
             BuzzerCheckbox.Visibility = Visibility.Hidden;
             await SimuleerRekenOmButtonClick();
             await Task.Delay(250);
-            BuzzerCheckbox.Visibility=Visibility.Visible;
-            
+
         }
 
         /// <summary>
@@ -320,27 +332,27 @@ namespace Project_ICT_V3
         }
 
 
-  
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             InitializeComponent();
             invoerBox.Focus(); // Geef de focus aan de invoerbox
             _port.WriteLine("LICHTEN_OPSTARTEN");
-            
+
         }
-                                
+
         private void BuzzerCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             InitializeComponent();
             BuzzerChecked = true; // Update lokale status
-          
+
         }
 
         private void BuzzerCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             InitializeComponent();
             BuzzerChecked = false; // Update lokale status
-            
+
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -349,5 +361,21 @@ namespace Project_ICT_V3
 
             _morsCodes.Show();
         }
+
+        private void ProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
+            InitializeComponent();
+            if (ProgressBar.Value > 0 && ProgressBar.Maximum > 0)
+            { percentage.Content = Math.Round(ProgressBar.Value / ProgressBar.Maximum * 100) + "%"; }
+            else
+            {
+                percentage.Content = 100 + "%";
+
+            }
+
+
+        }
     }
+
 }
