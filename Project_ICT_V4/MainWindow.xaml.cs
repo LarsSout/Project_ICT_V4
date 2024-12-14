@@ -36,28 +36,18 @@ namespace Project_ICT_V3
         public MainWindow()
         {
             InitializeComponent();
+
             this.Closed += WindowClosedReset; // Event gekoppeld om de poort te resetten bij sluiting van het venster
             this.KeyDown += Window_KeyDown;  // Event gekoppeld voor toetsafhandeling
 
 
-
-
-            if (BuzzerChecked)
-            {
-                if (_port.IsOpen)
-                {
-                    _port.WriteLine("BUZZER_UIT"); // Stuur commando naar Arduino
-                }
-            }
-            else
-            {
 
                 if (_port.IsOpen)
                 {
                     _port.WriteLine("BUZZER_AAN"); // Stuur commando naar Arduino
 
                 }
-            }
+            
 
 
 
@@ -125,8 +115,21 @@ namespace Project_ICT_V3
         /// </summary>
         public async Task Morsconverteren()
         {
+
+
             if (_port.IsOpen)
             {
+
+                if (BuzzerChecked)
+                {
+                    _port.WriteLine("BUZZER_UIT");
+                }
+                else
+                {
+                    _port.WriteLine("BUZZER_AAN");
+                }
+
+
                 klik++;
 
                 while (klik < 2)
@@ -222,10 +225,7 @@ namespace Project_ICT_V3
         /// </summary>
         private async Task SimuleerRekenOmButtonClick()
         {
-            if (BuzzerChecked)
-            {
-                _port.WriteLine("BUZZER_UIT");
-            }
+           
 
             if (isProcessing)
             {
@@ -345,6 +345,7 @@ namespace Project_ICT_V3
         {
             InitializeComponent();
             BuzzerChecked = true; // Update lokale status
+            
 
         }
 

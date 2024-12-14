@@ -15,7 +15,7 @@
 
         </ComboBox>
         <Label Name="morscodes" Content="" HorizontalAlignment="Left" Margin="45,125,0,0" VerticalAlignment="Top" Height="303" Width="580" FontSize="15" />
-        <Label Content="Kies uw taal om de morscodes te zien" HorizontalAlignment="Left" Margin="69,45,0,0" VerticalAlignment="Top" Width="206" Height="36"/>
+        <Label Content="Kies uw taal om de morscodes te zien" HorizontalAlignment="Left" Margin="45,45,0,0" VerticalAlignment="Top" Width="230" Height="36"/>
 
     </Grid>
 </Window>
