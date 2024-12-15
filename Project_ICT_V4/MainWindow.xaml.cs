@@ -42,12 +42,12 @@ namespace Project_ICT_V3
 
 
 
-                if (_port.IsOpen)
-                {
-                    _port.WriteLine("BUZZER_AAN"); // Stuur commando naar Arduino
+            if (_port.IsOpen)
+            {
+                _port.WriteLine("BUZZER_AAN"); // Stuur commando naar Arduino
 
-                }
-            
+            }
+
 
 
 
@@ -157,8 +157,7 @@ namespace Project_ICT_V3
                         antwoordTXT.Text = output;
                         int maxLength = output.Count(c => c == '.' || c == '-' || c == '|');
                         ProgressBar.Maximum = maxLength;
-                        maxValue.Content = maxLength;
-
+                        
                         if (character == '.' && MagDoorDoen)
                         {
                             aantalinvoer++;
@@ -225,7 +224,7 @@ namespace Project_ICT_V3
         /// </summary>
         private async Task SimuleerRekenOmButtonClick()
         {
-           
+
 
             if (isProcessing)
             {
@@ -245,7 +244,7 @@ namespace Project_ICT_V3
             ProgressBar.Value = 0;
             ProgressBar.Maximum = 100;
             aantalinvoer = 0;
-            percentage.Content = 0+"%";
+            percentage.Content = 0 + "%";
 
         }
 
@@ -345,7 +344,7 @@ namespace Project_ICT_V3
         {
             InitializeComponent();
             BuzzerChecked = true; // Update lokale status
-            
+
 
         }
 

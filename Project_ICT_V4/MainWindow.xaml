@@ -43,7 +43,7 @@
         <!-- Convert button -->
         <Button Content="Converteer" Grid.Row="2" Grid.Column="1" ToolTip="Zet Om" 
                 Width="120" Height="35" HorizontalAlignment="Left" 
-                VerticalAlignment="Top" Margin="0,20,0,0" Click="ConverterButton_Click" 
+                VerticalAlignment="Top" Margin="18,20,0,0" Click="ConverterButton_Click" 
                 Background="#4CAF50" Foreground="White" FontWeight="Bold" />
 
         <!-- Output label -->
@@ -81,16 +81,14 @@
         <Label Content="Gededecteerde COM poort:" HorizontalAlignment="Left" Margin="121,209,0,0" Grid.Row="4" VerticalAlignment="Top" RenderTransformOrigin="0.314,0.024" Grid.ColumnSpan="2" Height="29" Width="161"/>
 
         <!-- Exit button -->
-        <Button Grid.Column="1" Content="Beeindig programma" HorizontalAlignment="Left" Margin="229,17,0,0" Grid.Row="4" VerticalAlignment="Top" ToolTip="Beindigen van het programma" Height="39" Width="116" Click="Button_Click"/>
+        <Button Grid.Column="1" Content="Beeindig programma" HorizontalAlignment="Left" Margin="249,46,0,0" Grid.Row="4" VerticalAlignment="Top" ToolTip="Beindigen van het programma" Height="39" Width="116" Click="Button_Click"/>
         <Label Grid.Column="1" Content="(CTRL R)" HorizontalAlignment="Left" Margin="14,149,0,0" Grid.Row="4" VerticalAlignment="Top"/>
-        <CheckBox Name="BuzzerCheckbox" Grid.Column="1" Content="Buzzer uit (default: aan)" HorizontalAlignment="Left" Margin="220,4,0,0" Grid.Row="3" VerticalAlignment="Top" 
+        <CheckBox Name="BuzzerCheckbox" Grid.Column="1" Content="Buzzer uit (default: aan)" HorizontalAlignment="Left" Margin="234,30,0,0" Grid.Row="2" VerticalAlignment="Top" 
           Checked="BuzzerCheckbox_Checked" 
           Unchecked="BuzzerCheckbox_Unchecked"  />
-        <Button Content="Morscodes" HorizontalAlignment="Left" Margin="54,36,0,0" Grid.Row="4" VerticalAlignment="Top" Click="Button_Click_1"/>
+        <Button Content="Morscodes" HorizontalAlignment="Left" Margin="54,36,0,0" Grid.Row="4" VerticalAlignment="Top" Click="Button_Click_1" ToolTip="Bekijk de beschikbare morscodes."/>
         <ProgressBar Name="ProgressBar" HorizontalAlignment="Left" Height="15" Margin="194,10,0,0" Grid.Row="4" VerticalAlignment="Top" Width="264" Grid.ColumnSpan="2" ValueChanged="ProgressBar_ValueChanged"/>
-        <Label Name="Value" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="32,28,0,0" Grid.Row="4" VerticalAlignment="Top" Width="36"/>
-        <Label Name="maxValue" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="196,4,0,0" Grid.Row="4" VerticalAlignment="Top"/>
-        <Label Name="percentage" Grid.Column="1" Content="0%" HorizontalAlignment="Left" Margin="31,4,0,0" Grid.Row="4" VerticalAlignment="Top"/>
+        <Label Name="percentage" Grid.Column="1" Content="0%" HorizontalAlignment="Left" Margin="55,4,0,0" Grid.Row="4" VerticalAlignment="Top" Width="59"/>
 
 
     </Grid>
